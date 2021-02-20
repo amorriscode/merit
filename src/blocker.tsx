@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { useEffect, useState } from 'react'
+import { RiSettings3Fill } from 'react-icons/ri'
 
 import './styles.css'
 
@@ -19,7 +20,9 @@ const Blocker = () => {
     const interval = setInterval(() => {
       // Remove credits from user's account
       if (!displayBlocker) {
-        const newCredits = credits - 2
+        // Burn credits faster than you earn
+        const newCredits = credits - 10
+
         chrome.storage.sync.set({ meritCredits: newCredits })
 
         setCredits(newCredits)
@@ -28,30 +31,47 @@ const Blocker = () => {
           setDisplayBlocker(true)
         }
       }
-    }, 2000)
+    }, 1000)
 
     return () => clearInterval(interval)
   }, [displayBlocker, credits])
+
+  const openOptions = () => {
+    if (chrome.runtime.openOptionsPage) {
+      chrome.runtime.openOptionsPage()
+    } else {
+      window.open(chrome.runtime.getURL('options.html'))
+    }
+  }
 
   return (
     <>
       {displayBlocker && (
         <div className="tw-h-screen tw-w-screen tw-bg-black tw-fixed tw-top-0 tw-left-0 tw-right-0 tw-bottom-0 tw-z-50 tw-bg-opacity-75 tw-font-sans">
           <main className="tw-bg-white tw-rounded-lg tw-flex tw-flex-col tw-max-w-lg tw-mx-auto tw-my-20">
-            <div className="tw-p-4 tw-rounded-t-lg tw-bg-gradient-to-r tw-from-yellow-400 tw-via-red-500 tw-to-pink-500">
+            <div className="tw-p-4 tw-rounded-t-lg tw-bg-gradient-to-r tw-from-yellow-400 tw-via-red-500 tw-to-pink-500 tw-flex tw-justify-between tw-text-2xl tw-items-center tw-space-x-40 tw-text-white">
               <Logo />
+
+              <RiSettings3Fill
+                onClick={openOptions}
+                className="hover:tw-opacity-50 hover:tw-cursor-pointer"
+              />
             </div>
 
             <div className="tw-p-8 tw-flex tw-flex-col tw-space-y-4">
               {credits > 10 ? (
                 <>
-                  <div>You have {credits} to spend on this website.</div>
-                  <button
+                  <div>
+                    You have <span className="tw-font-bold">{credits}</span> to
+                    spend on this website.
+                  </div>
+
+                  <div
                     onClick={() => setDisplayBlocker(false)}
-                    className="tw-p-4 hover:tw-cursor-pointer tw-w-1/5 tw-rounded tw-text-center tw-bg-yellow-400 tw-text-white tw-font-bold hover:tw-bg-opacity-75 tw-w-max"
+                    className="tw-p-4 hover:tw-cursor-pointer tw-rounded tw-text-center tw-bg-yellow-400 tw-text-white tw-font-bold hover:tw-bg-opacity-75 tw-w-auto"
                   >
                     Spend Credits
-                  </button>
+                  </div>
                 </>
               ) : (
                 <>

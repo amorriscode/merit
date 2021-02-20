@@ -57,7 +57,7 @@ const UnproductiveSites = () => {
       </div>
 
       {!!unproductiveSites.length ? (
-        <div className="tw-space-y-4 tw-bg-white tw-p-4 tw-rounded-lg">
+        <div className="tw-bg-white tw-p-4 tw-rounded-lg tw-divide-y-2 tw-divide-solid tw-divide-gray-50">
           {unproductiveSites.map((site) => (
             <SiteCard site={site} onRemove={handleRemoveUnproductiveSite} />
           ))}
