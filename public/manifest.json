@@ -1,0 +1,27 @@
+{
+  "name": "merit",
+  "description": "Waste time once you've earned it.",
+  "manifest_version": 2,
+  "version": "0.0.1",
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "options_page": "options.html",
+  "browser_action": {
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "web_accessible_resources": ["blocker.js"],
+  "permissions": ["tabs", "activeTab", "storage"]
+}
