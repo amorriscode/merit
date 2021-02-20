@@ -42,19 +42,22 @@ const Blocker = () => {
               <Logo />
             </div>
 
-            <div className="tw-p-8">
+            <div className="tw-p-8 tw-flex tw-flex-col tw-space-y-4">
               {credits > 10 ? (
-                <div>
-                  You have {credits} to spend on this website.
-                  <button onClick={() => setDisplayBlocker(false)}>
+                <>
+                  <div>You have {credits} to spend on this website.</div>
+                  <button
+                    onClick={() => setDisplayBlocker(false)}
+                    className="tw-p-4 hover:tw-cursor-pointer tw-w-1/5 tw-rounded tw-text-center tw-bg-yellow-400 tw-text-white tw-font-bold hover:tw-bg-opacity-75 tw-w-max"
+                  >
                     Spend Credits
                   </button>
-                </div>
+                </>
               ) : (
-                <div>
+                <>
                   <div>You have no credits remaining.</div>
                   <div>Time to get to work!</div>
-                </div>
+                </>
               )}
             </div>
           </main>
