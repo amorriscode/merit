@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from 'react'
 
 import SiteCard from './siteCard'
 
-const UnproductiveSites = () => {
+const UnproductiveSites = (): React.ReactElement => {
   const [unproductiveSites, setUnproductiveSites] = useState<string[]>([])
   const unproductiveSiteRef = useRef<HTMLInputElement>(null)
 
@@ -56,15 +56,19 @@ const UnproductiveSites = () => {
         </div>
       </div>
 
-      {!!unproductiveSites.length ? (
+      {unproductiveSites.length ? (
         <div className="tw-bg-white tw-p-4 tw-rounded-lg tw-divide-y-2 tw-divide-solid tw-divide-gray-50">
           {unproductiveSites.map((site) => (
-            <SiteCard site={site} onRemove={handleRemoveUnproductiveSite} />
+            <SiteCard
+              key={site}
+              site={site}
+              onRemove={handleRemoveUnproductiveSite}
+            />
           ))}
         </div>
       ) : (
         <div>
-          You don't have any unproductive sites. Add one to get started!
+          You don&apos;t have any unproductive sites. Add one to get started!
         </div>
       )}
     </section>
