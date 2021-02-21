@@ -6,7 +6,7 @@ import './styles.css'
 
 import Logo from './logo'
 
-const Blocker = () => {
+const Blocker = (): React.ReactElement => {
   const [displayBlocker, setDisplayBlocker] = useState(true)
   const [credits, setCredits] = useState(0)
 

@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from 'react'
 
 import SiteCard from './siteCard'
 
-const ProductiveSites = () => {
+const ProductiveSites = (): React.ReactElement => {
   const [productiveSites, setProductiveSites] = useState<string[]>([])
   const productiveSiteRef = useRef<HTMLInputElement>(null)
 
@@ -56,14 +56,20 @@ const ProductiveSites = () => {
         </div>
       </div>
 
-      {!!productiveSites.length ? (
+      {productiveSites.length ? (
         <div className="tw-bg-white tw-p-4 tw-rounded-lg tw-divide-y-2 tw-divide-solid tw-divide-gray-50">
           {productiveSites.map((site) => (
-            <SiteCard site={site} onRemove={handleRemoveProductiveSite} />
+            <SiteCard
+              key={site}
+              site={site}
+              onRemove={handleRemoveProductiveSite}
+            />
           ))}
         </div>
       ) : (
-        <div>You don't have any productive sites. Add one to get started!</div>
+        <div>
+          You don&apos;t have any productive sites. Add one to get started!
+        </div>
       )}
     </section>
   )

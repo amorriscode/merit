@@ -2,7 +2,13 @@ import * as React from 'react'
 import { useState } from 'react'
 import { RiCloseFill } from 'react-icons/ri'
 
-const SiteCard = ({ site, onRemove }: { site: string; onRemove: Function }) => {
+const SiteCard = ({
+  site,
+  onRemove,
+}: {
+  site: string
+  onRemove: (site: string) => void
+}): React.ReactElement => {
   const [showFunctions, setShowFunctions] = useState(false)
 
   return (
