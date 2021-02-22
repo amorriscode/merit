@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { RiSettings3Fill } from 'react-icons/ri'
 
 import './styles.css'
+import { formatUrl } from './utils/url'
 
 import Logo from './logo'
 
@@ -18,19 +19,26 @@ const Blocker = (): React.ReactElement => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      // Remove credits from user's account
-      if (!displayBlocker) {
-        // Burn credits faster than you earn
-        const newCredits = credits - 10
+      chrome.storage.local.get(['meritSpendingSite'], (result) => {
+        const onSpendingSite = formatUrl(window.location.hostname).includes(
+          result.meritSpendingSite
+        )
 
-        chrome.storage.sync.set({ meritCredits: newCredits })
+        if (!displayBlocker && onSpendingSite) {
+          // Burn credits faster than you earn
+          const newCredits = credits - 10
 
-        setCredits(newCredits)
+          chrome.storage.sync.set({ meritCredits: newCredits })
 
-        if (newCredits <= 0) {
+          setCredits(newCredits)
+
+          if (newCredits <= 0) {
+            setDisplayBlocker(true)
+          }
+        } else {
           setDisplayBlocker(true)
         }
-      }
+      })
     }, 1000)
 
     return () => clearInterval(interval)
@@ -42,6 +50,15 @@ const Blocker = (): React.ReactElement => {
     } else {
       window.open(chrome.runtime.getURL('options.html'))
     }
+  }
+
+  const handleSpendCredits = () => {
+    // Store the site the user wants to spend credits on
+    chrome.storage.local.set({
+      meritSpendingSite: formatUrl(window.location.hostname),
+    })
+
+    setDisplayBlocker(false)
   }
 
   return (
@@ -67,7 +84,7 @@ const Blocker = (): React.ReactElement => {
                   </div>
 
                   <div
-                    onClick={() => setDisplayBlocker(false)}
+                    onClick={handleSpendCredits}
                     className="tw-p-4 hover:tw-cursor-pointer tw-rounded tw-text-center tw-bg-yellow-400 tw-text-white tw-font-bold hover:tw-bg-opacity-75 tw-w-auto"
                   >
                     Spend Credits
