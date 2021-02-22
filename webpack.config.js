@@ -8,6 +8,7 @@ const config = {
     popup: path.join(__dirname, 'src/popup.tsx'),
     content: path.join(__dirname, 'src/content.tsx'),
     blocker: path.join(__dirname, 'src/blocker.tsx'),
+    background: path.join(__dirname, 'src/background.tsx'),
   },
   output: { path: path.join(__dirname, 'dist'), filename: '[name].js' },
   module: {
