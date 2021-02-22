@@ -10,24 +10,20 @@ chrome.tabs.onActivated.addListener(() => {
 
     chrome.tabs.sendMessage(tabs[0].id, { activeTabUrl })
 
-    chrome.storage.sync.get(
-      ['meritProductiveSites', 'meritUnproductiveSites'],
-      (result) => {
-        const productiveSites: string[] = result.meritProductiveSites || []
-        const unproductiveSites: string[] = result.meritUnproductiveSites || []
+    chrome.storage.sync.get(['meritProductiveSites'], (result) => {
+      const productiveSites: string[] = result.meritProductiveSites || []
 
-        chrome.alarms.clearAll()
+      chrome.alarms.clearAll()
 
-        if (productiveSites.some((site) => activeTabUrl.includes(site))) {
-          chrome.storage.sync.set({ meritSpendingSite: null })
-          chrome.alarms.create('earnMeritCredits', { periodInMinutes: 1 })
-        } else if (
-          unproductiveSites.some((site) => activeTabUrl.includes(site))
-        ) {
-          chrome.storage.sync.set({ meritSpendingSite: activeTabUrl })
-        }
+      // Stop spending credits (reset all blockers)
+      chrome.storage.local.set({ meritSpendingSite: null })
+
+      // Allow the user to earn credits if the active tab is a productive site
+      if (productiveSites.some((site) => activeTabUrl.includes(site))) {
+        chrome.storage.sync.set({ meritSpendingSite: null })
+        chrome.alarms.create('earnMeritCredits', { periodInMinutes: 1 })
       }
-    )
+    })
   })
 })
 

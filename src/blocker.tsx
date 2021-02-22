@@ -19,7 +19,7 @@ const Blocker = (): React.ReactElement => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      chrome.storage.sync.get(['meritSpendingSite'], (result) => {
+      chrome.storage.local.get(['meritSpendingSite'], (result) => {
         const onSpendingSite = formatUrl(window.location.hostname).includes(
           result.meritSpendingSite
         )
@@ -52,6 +52,15 @@ const Blocker = (): React.ReactElement => {
     }
   }
 
+  const handleSpendCredits = () => {
+    // Store the site the user wants to spend credits on
+    chrome.storage.local.set({
+      meritSpendingSite: formatUrl(window.location.hostname),
+    })
+
+    setDisplayBlocker(false)
+  }
+
   return (
     <>
       {displayBlocker && (
@@ -75,7 +84,7 @@ const Blocker = (): React.ReactElement => {
                   </div>
 
                   <div
-                    onClick={() => setDisplayBlocker(false)}
+                    onClick={handleSpendCredits}
                     className="tw-p-4 hover:tw-cursor-pointer tw-rounded tw-text-center tw-bg-yellow-400 tw-text-white tw-font-bold hover:tw-bg-opacity-75 tw-w-auto"
                   >
                     Spend Credits
