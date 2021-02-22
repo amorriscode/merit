@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { RiSettings3Fill } from 'react-icons/ri'
 
 import './styles.css'
+import { formatUrl } from './utils/url'
 
 import Logo from './logo'
 
@@ -32,10 +33,7 @@ const Popup = () => {
     )
 
     chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
-      const url = tabs[0].url || ''
-      setCurrentSite(
-        url.replace(/^(?:https?:\/\/)?(?:www\.)?/i, '').replace(/\/$/, '')
-      )
+      setCurrentSite(formatUrl(tabs[0].url || ''))
     })
   }, [])
 
