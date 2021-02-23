@@ -13,7 +13,7 @@ const SiteCard = ({
 
   return (
     <div
-      className="tw-flex tw-space-x-2 tw-items-center tw-text-xl tw-p-4 tw-border-l-0 tw-border-r-0"
+      className="mrt-flex mrt-space-x-2 mrt-items-center mrt-text-xl mrt-p-4 mrt-border-l-0 mrt-border-r-0"
       onMouseEnter={() => setShowFunctions(true)}
       onMouseLeave={() => setShowFunctions(false)}
     >
@@ -21,7 +21,7 @@ const SiteCard = ({
 
       {showFunctions && (
         <RiCloseFill
-          className="tw-bg-red-700 tw-text-white hover:tw-bg-opacity-75 tw-rounded hover:tw-cursor-pointer"
+          className="mrt-bg-red-700 mrt-text-white hover:mrt-bg-opacity-75 mrt-rounded hover:mrt-cursor-pointer"
           onClick={() => onRemove(site)}
         />
       )}

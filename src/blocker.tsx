@@ -65,30 +65,30 @@ const Blocker = (): React.ReactElement => {
     <>
       {displayBlocker && (
         <div
-          className="tw-h-screen tw-w-screen tw-bg-black tw-fixed tw-top-0 tw-left-0 tw-right-0 tw-bottom-0 tw-bg-opacity-75 tw-font-sans"
+          className="mrt-h-screen mrt-w-screen mrt-bg-black mrt-fixed mrt-top-0 mrt-left-0 mrt-right-0 mrt-bottom-0 mrt-bg-opacity-75 mrt-font-sans"
           style={{ fontSize: '14px', zIndex: 999999 }}
         >
-          <main className="tw-bg-white tw-rounded-lg tw-flex tw-flex-col tw-max-w-lg tw-mx-auto tw-my-20">
-            <div className="tw-p-4 tw-rounded-t-lg tw-bg-gradient-to-r tw-from-yellow-400 tw-via-red-500 tw-to-pink-500 tw-flex tw-justify-between tw-text-2xl tw-items-center tw-space-x-40 tw-text-white">
+          <main className="mrt-bg-white mrt-rounded-lg mrt-flex mrt-flex-col mrt-max-w-lg mrt-mx-auto mrt-my-20">
+            <div className="mrt-p-4 mrt-rounded-t-lg mrt-bg-gradient-to-r mrt-from-yellow-400 mrt-via-red-500 mrt-to-pink-500 mrt-flex mrt-justify-between mrt-text-2xl mrt-items-center mrt-space-x-40 mrt-text-white">
               <Logo />
 
               <RiSettings3Fill
                 onClick={openOptions}
-                className="hover:tw-opacity-50 hover:tw-cursor-pointer"
+                className="hover:mrt-opacity-50 hover:mrt-cursor-pointer"
               />
             </div>
 
-            <div className="tw-p-8 tw-flex tw-flex-col tw-space-y-4">
+            <div className="mrt-p-8 mrt-flex mrt-flex-col mrt-space-y-4">
               {credits > 10 ? (
                 <>
                   <div>
-                    You have <span className="tw-font-bold">{credits}</span> to
+                    You have <span className="mrt-font-bold">{credits}</span> to
                     spend on this website.
                   </div>
 
                   <div
                     onClick={handleSpendCredits}
-                    className="tw-p-4 hover:tw-cursor-pointer tw-rounded tw-text-center tw-bg-yellow-400 tw-text-white tw-font-bold hover:tw-bg-opacity-75 tw-w-auto"
+                    className="mrt-p-4 hover:mrt-cursor-pointer mrt-rounded mrt-text-center mrt-bg-yellow-400 mrt-text-white mrt-font-bold hover:mrt-bg-opacity-75 mrt-w-auto"
                   >
                     Spend Credits
                   </div>

@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 const Logo = (): React.ReactElement => (
-  <div className="tw-text-2xl tw-tracking-tight tw-font-extrabold tw-italic">
+  <div className="mrt-text-2xl mrt-tracking-tight mrt-font-extrabold mrt-italic">
     merit
   </div>
 )
