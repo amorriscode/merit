@@ -9,7 +9,8 @@ chrome.storage.sync.get(['meritUnproductiveSites'], (result) => {
   const blockSite = () => {
     const blocker = document.createElement('div')
     blocker.id = 'blocker'
-    document.body.appendChild(blocker)
+
+    document.body.prepend(blocker)
 
     const mountNode = document.getElementById('blocker')
     ReactDOM.render(<Blocker />, mountNode)

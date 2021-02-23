@@ -64,7 +64,10 @@ const Blocker = (): React.ReactElement => {
   return (
     <>
       {displayBlocker && (
-        <div className="tw-h-screen tw-w-screen tw-bg-black tw-fixed tw-top-0 tw-left-0 tw-right-0 tw-bottom-0 tw-z-50 tw-bg-opacity-75 tw-font-sans">
+        <div
+          className="tw-h-screen tw-w-screen tw-bg-black tw-fixed tw-top-0 tw-left-0 tw-right-0 tw-bottom-0 tw-bg-opacity-75 tw-font-sans"
+          style={{ fontSize: '14px', zIndex: 999999 }}
+        >
           <main className="tw-bg-white tw-rounded-lg tw-flex tw-flex-col tw-max-w-lg tw-mx-auto tw-my-20">
             <div className="tw-p-4 tw-rounded-t-lg tw-bg-gradient-to-r tw-from-yellow-400 tw-via-red-500 tw-to-pink-500 tw-flex tw-justify-between tw-text-2xl tw-items-center tw-space-x-40 tw-text-white">
               <Logo />

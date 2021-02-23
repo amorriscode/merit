@@ -58,7 +58,7 @@ const Popup = () => {
   }
 
   return (
-    <div className="tw-w-96">
+    <div className="tw-w-96" style={{ fontSize: '14px' }}>
       <div className="tw-p-4 tw-bg-gradient-to-r tw-from-yellow-400 tw-via-red-500 tw-to-pink-500 tw-flex tw-justify-between tw-text-2xl tw-items-center tw-space-x-40 tw-text-white">
         <Logo />
 
