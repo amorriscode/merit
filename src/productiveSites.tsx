@@ -38,18 +38,18 @@ const ProductiveSites = (): React.ReactElement => {
 
   return (
     <section>
-      <div className="tw-flex tw-justify-between tw-items-center">
-        <h2 className="tw-text-2xl">Productive Sites</h2>
+      <div className="mrt-flex mrt-justify-between mrt-items-center">
+        <h2 className="mrt-text-2xl">Productive Sites</h2>
 
-        <div className="tw-space-x-2 tw-w-1/2 tw-flex">
+        <div className="mrt-space-x-2 mrt-w-1/2 mrt-flex">
           <input
             ref={productiveSiteRef}
             placeholder="https://reddit.com"
-            className="tw-p-4 tw-w-4/5 tw-border-0 tw-rounded tw-bg-gray-200"
+            className="mrt-p-4 mrt-w-4/5 mrt-border-0 mrt-rounded mrt-bg-gray-200"
           />
           <div
             onClick={handleNewProductiveSite}
-            className="tw-p-4 hover:tw-cursor-pointer tw-w-1/5 tw-rounded tw-text-center tw-bg-yellow-400 tw-text-white tw-font-bold hover:tw-bg-opacity-75"
+            className="mrt-p-4 hover:mrt-cursor-pointer mrt-w-1/5 mrt-rounded mrt-text-center mrt-bg-yellow-400 mrt-text-white mrt-font-bold hover:mrt-bg-opacity-75"
           >
             Add Site
           </div>
@@ -57,7 +57,7 @@ const ProductiveSites = (): React.ReactElement => {
       </div>
 
       {productiveSites.length ? (
-        <div className="tw-bg-white tw-p-4 tw-rounded-lg tw-divide-y-2 tw-divide-solid tw-divide-gray-50">
+        <div className="mrt-bg-white mrt-p-4 mrt-rounded-lg mrt-divide-y-2 mrt-divide-solid mrt-divide-gray-50">
           {productiveSites.map((site) => (
             <SiteCard
               key={site}

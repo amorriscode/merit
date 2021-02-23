@@ -15,7 +15,7 @@ module.exports = {
     },
   },
   plugins: [],
-  prefix: 'tw-',
+  prefix: 'mrt-',
   corePlugins: {
     preflight: false,
   },
