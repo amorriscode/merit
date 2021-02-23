@@ -9,7 +9,10 @@ import ProductiveSites from './productiveSites'
 
 const Options = () => {
   return (
-    <div className="tw-h-screen tw-w-screen tw-font-sans tw-bg-gray-100">
+    <div
+      className="tw-h-screen tw-w-screen tw-font-sans tw-bg-gray-100"
+      style={{ fontSize: '14px' }}
+    >
       <div className="tw-p-4 tw-bg-gradient-to-r tw-from-yellow-400 tw-via-red-500 tw-to-pink-500">
         <Logo />
       </div>
