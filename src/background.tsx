@@ -17,6 +17,7 @@ chrome.tabs.onActivated.addListener(() => {
 
       // Stop spending credits (reset all blockers)
       chrome.storage.local.set({ meritSpendingSite: null })
+      chrome.storage.local.set({ meritDisabled: false })
 
       // Allow the user to earn credits if the active tab is a productive site
       if (productiveSites.some((site) => activeTabUrl.includes(site))) {

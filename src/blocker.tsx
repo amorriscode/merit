@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { RiSettings3Fill } from 'react-icons/ri'
 
 import './styles.css'
@@ -9,7 +9,9 @@ import Logo from './logo'
 
 const Blocker = (): React.ReactElement => {
   const [displayBlocker, setDisplayBlocker] = useState(true)
+  const [showDisableConfirmation, setShowDisableConfirmation] = useState(false)
   const [credits, setCredits] = useState(0)
+  const disableReasonRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     chrome.storage.sync.get(['meritCredits'], (result) => {
@@ -19,30 +21,35 @@ const Blocker = (): React.ReactElement => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      chrome.storage.local.get(['meritSpendingSite'], (result) => {
-        const onSpendingSite = formatUrl(window.location.hostname).includes(
-          result.meritSpendingSite
-        )
+      chrome.storage.local.get(
+        ['meritSpendingSite', 'meritDisabled'],
+        (result) => {
+          const { meritSpendingSite, meritDisabled } = result
 
-        if (!displayBlocker && onSpendingSite) {
-          // Burn credits faster than you earn
-          const newCredits = credits - 10
+          const onSpendingSite = formatUrl(window.location.hostname).includes(
+            meritSpendingSite
+          )
 
-          chrome.storage.sync.set({ meritCredits: newCredits })
+          if (!displayBlocker && onSpendingSite) {
+            // Burn credits faster than you earn
+            const newCredits = credits - 10
 
-          setCredits(newCredits)
+            chrome.storage.sync.set({ meritCredits: newCredits })
 
-          if (newCredits <= 0) {
+            setCredits(newCredits)
+
+            if (newCredits <= 0) {
+              setDisplayBlocker(true)
+            }
+          } else if (!meritDisabled) {
             setDisplayBlocker(true)
           }
-        } else {
-          setDisplayBlocker(true)
         }
-      })
+      )
     }, 1000)
 
     return () => clearInterval(interval)
-  }, [displayBlocker, credits])
+  }, [displayBlocker])
 
   const openOptions = () => {
     if (chrome.runtime.openOptionsPage) {
@@ -59,6 +66,15 @@ const Blocker = (): React.ReactElement => {
     })
 
     setDisplayBlocker(false)
+  }
+
+  const handleDisable = () => {
+    chrome.storage.local.set({
+      meritDisabled: true,
+    })
+
+    setDisplayBlocker(false)
+    setShowDisableConfirmation(false)
   }
 
   return (
@@ -78,25 +94,61 @@ const Blocker = (): React.ReactElement => {
               />
             </div>
 
-            <div className="mrt-p-8 mrt-flex mrt-flex-col mrt-space-y-4">
-              {credits > 10 ? (
+            <div className="mrt-p-8 mrt-flex mrt-flex-col mrt-space-y-4 mrt-text-center">
+              {showDisableConfirmation ? (
                 <>
-                  <div>
-                    You have <span className="mrt-font-bold">{credits}</span> to
-                    spend on this website.
+                  <div>Why do you want to disable Merit?</div>
+
+                  <input
+                    ref={disableReasonRef}
+                    placeholder="I need a distraction"
+                    className="mrt-p-4 mrt-border-0 mrt-rounded mrt-bg-gray-200"
+                  />
+
+                  <div
+                    onClick={handleDisable}
+                    className="mrt-p-4 hover:mrt-cursor-pointer mrt-rounded mrt-bg-pink-500 mrt-text-white mrt-font-bold hover:mrt-bg-opacity-75 mrt-w-auto"
+                  >
+                    Disable
                   </div>
 
                   <div
-                    onClick={handleSpendCredits}
-                    className="mrt-p-4 hover:mrt-cursor-pointer mrt-rounded mrt-text-center mrt-bg-yellow-400 mrt-text-white mrt-font-bold hover:mrt-bg-opacity-75 mrt-w-auto"
+                    onClick={() => setShowDisableConfirmation(false)}
+                    className="hover:mrt-cursor-pointer mrt-text-gray-600 hover:mrt-text-opacity-75 mrt-w-auto mrt-text-xs"
                   >
-                    Spend Credits
+                    Back
                   </div>
                 </>
               ) : (
                 <>
-                  <div>You have no credits remaining.</div>
-                  <div>Time to get to work!</div>
+                  {credits > 10 ? (
+                    <>
+                      <div>
+                        You have{' '}
+                        <span className="mrt-font-bold">{credits}</span> to
+                        spend on this website.
+                      </div>
+
+                      <div
+                        onClick={handleSpendCredits}
+                        className="mrt-p-4 hover:mrt-cursor-pointer mrt-rounded mrt-bg-yellow-400 mrt-text-white mrt-font-bold hover:mrt-bg-opacity-75 mrt-w-auto"
+                      >
+                        Spend Credits
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div>You have no credits remaining.</div>
+                      <div>Time to get to work!</div>
+                    </>
+                  )}
+
+                  <div
+                    onClick={() => setShowDisableConfirmation(true)}
+                    className="hover:mrt-cursor-pointer mrt-text-gray-600 hover:mrt-text-opacity-75 mrt-w-auto mrt-text-xs"
+                  >
+                    Bypass Merit
+                  </div>
                 </>
               )}
             </div>
