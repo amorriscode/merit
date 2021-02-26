@@ -49,7 +49,7 @@ const Blocker = (): React.ReactElement => {
     }, 1000)
 
     return () => clearInterval(interval)
-  }, [displayBlocker])
+  }, [displayBlocker, credits])
 
   const openOptions = () => {
     if (chrome.runtime.openOptionsPage) {
